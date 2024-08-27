@@ -35,13 +35,14 @@ else:
     DATABASE_PASS = "jgZKW33Q+HZk8rqylZxaPg1lbuNGHJhgzsq3gBKV32g="
     DATABASE_NAME = "owtf_db"
     DATABASE_USER = "owtf_db_user"
-    DATABASE_IP = os.environ.get("POSTGRES_HOST","127.0.0.1")
+    DATABASE_IP = os.environ.get("POSTGRES_HOST", "127.0.0.1")
     DATABASE_PORT = 5432
 
 # API and UI Server
 SERVER_ADDR = "0.0.0.0"
 SERVER_PORT = 8009
 FILE_SERVER_PORT = 8010
+FRONTEND_SERVER_PORT = 8019
 
 # Default API version
 DEFAULT_API_VERSION = "v1"
@@ -53,8 +54,8 @@ APP_SECRET = "changeme"
 SESSION_COOKIE_NAME = "owtf-session"
 
 # CORS settings. Fine grained, do not override if possible.
-SIMPLE_HEADERS = ["accept", "accept-language", "content-language"]
-ALLOWED_ORIGINS = ["http:/localhost:8009", "http://localhost:8010"]
+SIMPLE_HEADERS = ["accept", "accept-language", "content-language", "authorization"]
+ALLOWED_ORIGINS = ["http://localhost:8010", "http://localhost:8019"]
 ALLOWED_METHODS = ["GET", "POST", "DELETE"]
 SEND_CREDENTIALS = False
 

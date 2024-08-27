@@ -26,6 +26,7 @@ from owtf.settings import (
     SMTP_PORT,
     SERVER_ADDR,
     SERVER_PORT,
+    FRONTEND_SERVER_PORT,
 )
 from owtf.db.session import Session
 from uuid import uuid4
@@ -114,7 +115,7 @@ class LogInHandler(APIRequestHandler):
                 "username": user.name,
             }
             jwt_token = jwt.encode(payload, JWT_SECRET_KEY, JWT_ALGORITHM)
-            data = {"jwt-token": jwt_token.decode("utf-8")}
+            data = {"jwt-token": jwt_token}
             UserLoginToken.add_user_login_token(self.session, jwt_token, user.id)
             self.success({"status": "success", "message": data})
         elif user and not user.is_active:
@@ -340,7 +341,7 @@ class AccountActivationGenerateHandler(APIRequestHandler):
             + ", <br/><br/>"
             """ 
             Click here """
-            + "http://{}:{}".format(SERVER_ADDR, str(SERVER_PORT))
+            + "http://{}:{}".format(SERVER_ADDR, str(FRONTEND_SERVER_PORT))
             + "/email-verify/"
             + email_confirmation_dict["key_value"]
             + """ to activate your account (Link will expire in 1 hour).

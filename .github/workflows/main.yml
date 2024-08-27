@@ -23,6 +23,7 @@ jobs:
           POSTGRES_USER: owtf_db_user
           POSTGRES_PASSWORD: ${{ secrets.OWTF_DB_PASSWORD }}
           POSTGRES_DB: owtf_db
+          POSTGRES_HOST_AUTH_METHOD: trust
         ports:
           - 5432:5432
         options: >-
@@ -32,9 +33,9 @@ jobs:
           --health-timeout 5s 
           --health-retries 5
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
-      - uses: actions/cache@v2
+      - uses: actions/cache@v3
         with:
           path: ~/.cache/pip
           key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements/*') }}
@@ -45,7 +46,6 @@ jobs:
         run: |
           sudo apt update
           sudo apt -y install libffi-dev golang postgresql-client libgnutls28-dev libyaml-dev python3-yaml python3-pip libcurl4-openssl-dev libssl-dev python3-venv
-          pip3 install pyopenssl
       - name: install
         run: |
           echo "Running install base requirements"

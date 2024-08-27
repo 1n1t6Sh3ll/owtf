@@ -138,49 +138,6 @@ proxy_setup() {
     fi
 }
 
-# ======================================
-#   SETUP WEB INTERFACE DEPENDENCIES
-# ======================================
-
-ui_setup() {
-    # Download community written templates for export report functionality.
-    if [ ! -d "${ROOT_DIR}/webapp/src/containers/Report/templates" ]; then
-        echo "${warning} Templates not found, fetching the latest ones...${reset}"
-        git clone https://github.com/owtf/templates.git "$ROOT_DIR/webapp/src/containers/Report/templates"
-    fi
-
-    if [ ! -d ${NVM_DIR} ]; then
-        # Instead of using apt-get to install npm we will nvm to install npm because apt-get installs older-version of node
-        echo "${normal}[*] Installing npm using nvm.${reset}"
-        wget https://raw.githubusercontent.com/creationix/nvm/v0.31.1/install.sh -O /tmp/install_nvm.sh
-        bash /tmp/install_nvm.sh
-        rm -rf /tmp/install_nvm.sh
-    fi
-
-    # Setup nvm and install node
-    . ${NVM_DIR}/nvm.sh
-    echo "${normal}[*] Installing NPM...${reset}"
-    nvm install 18.0
-    nvm alias default node
-    echo "${normal}[*] npm successfully installed.${reset}"
-
-    # Installing webpack and gulp globally so that it can used by command line to build the bundle.
-    npm install -g yarn
-    # Installing node dependencies
-    echo "${normal}[*] Installing node dependencies.${reset}"
-    TMP_DIR=${PWD}
-    cd ${ROOT_DIR}/webapp
-    yarn --silent
-    echo "${normal}[*] Yarn dependencies successfully installed.${reset}"
-
-    # Building the ReactJS project
-    echo "${normal}[*] Building using webpack.${reset}"
-    yarn build &> /dev/null
-    echo "${normal}[*] Build successful${reset}"
-    cd ${TMP_DIR}
-}
-
-#========================================
 cat << EOF
  _____ _ _ _ _____ _____
 |     | | | |_   _|   __|
@@ -200,6 +157,9 @@ pip install pre-commit==1.8.2
 pip install black==18.4a3
 pre-commit install
 
+#Installing pip tool in isolated environment
+pipx install bbot==1.1.0.2124
+
 # Copy all necessary directories
 for dir in ${ROOT_DIR}/data/*; do
     copy_dirs "$dir" "${OWTF_DIR}/$(basename $OWTF_DIR/$dir)"
@@ -210,10 +170,10 @@ if [ ! "$(uname)" == "Darwin" ]; then
 fi
 
 proxy_setup
-ui_setup
 make post-install
 
 echo "${info}[*] Finished!${reset}"
 echo "${info}[*] Start OWTF by running cd path/to/pentest/directory; owtf${reset}"
+echo "${info}[*] Start OWTF-Webapp by running make setup-web"
 echo "${warning}[!] Please add a new JWT_SECRET_KEY in the settings file located in owtf/owtf/settings.py${reset} "
 echo "${warning}[!] Please setup SMTP server of your choice in the settings file located in owtf/owtf/settings.py${reset} "

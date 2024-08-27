@@ -4,7 +4,7 @@ sphinxcontrib.httpdomain
 -e git+https://github.com/jek/blinker#egg=blinker
 cffi==1.10.0
 cookies==2.2.1
-dnspython==1.15.0
+dnspython==2.6.1
 future==0.16.0
 hrt==0.1.0
 ipaddr
@@ -19,5 +19,5 @@ requests==2.18.4
 selenium==3.4.3
 six==1.10.0
 SQLAlchemy==1.1.13
-tornado==5.0.1
+tornado==6.3.3
 

@@ -15,10 +15,7 @@ const publicPath = webpackConfig.output.publicPath;
 const app = express();
 const compiler = webpack(webpackConfig);
 const middleware = webpackDevMiddleware(compiler, {
-  noInfo: true,
   publicPath,
-  silent: true,
-  stats: 'errors-only',
 });
 const port = 3000;
 const host = '0.0.0.0';

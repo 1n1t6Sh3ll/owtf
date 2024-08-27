@@ -72,6 +72,24 @@ TOOLS:
     value: /usr/bin/o-saft
   - config: TOOL_SSLLABS_SCAN_DIR
     value: ~/.owtf/tools/restricted/ssllabs-scan/
+  - config: TOOL_GOBUSTER
+    value: /usr/bin/gobuster
+  - config: TOOL_TESTSSL
+    value: ~/.owtf/tools/restricted/testssl/
+  - config: TOOL_GCPBUCKETBRUTE
+    value: ~/.owtf/tools/restricted/gcpbucketbrute/
+  - config: TOOL_DIRSEARCH
+    value: ~/.owtf/tools/restricted/dirsearch/dirsearch-master/dirsearch.py
+  - config: TOOL_AMASS
+    value: /usr/bin/amass
+  - config: TOOL_NUCLEI 
+    value: /usr/bin/nuclei
+  - config: TOOL_HTTPX
+    value: /usr/bin/httpx-toolkit
+  - config: TOOL_GAU
+    value: ~/.owtf/tools/restricted/gau/gau
+
+
 
 DICTIONARIES:
 # ************************* Password brute-force dictionaries / defaults ******************************
@@ -107,6 +125,9 @@ DICTIONARIES:
     value: /usr/share/doc/python-impacket-doc/examples/samrdump.py
 # ************************** Directory Brute-forcing dictionaries **************************
 
+# SecList
+  - config: DICT_SECLISTS
+    value: ~/.owtf/dictionaries/restricted/seclists/SecLists-master
 # Generic all-in-one dictionary that combines svndigger with raft files of mixedcase:
   - config: DICT_GENERIC_DIRBUSTER
     value: "@@@FRAMEWORK_DIR@@@/dictionaries/restricted/combined/filtered_combined_mixedcase.txt"
@@ -136,7 +157,6 @@ DICTIONARIES:
     value: "@@@FRAMEWORK_DIR@@@/dictionaries/restricted/drupal/dir_buster.drupal_plugins.txt"
   - config: DICT_CMS_DRUPAL_THEMES_DIRBUSTER
     value: "@@@FRAMEWORK_DIR@@@/dictionaries/restricted/drupal/dir_buster.drupal_themes.txt"
-
 
 NETWORK_PORTS:
 # ************************* Ports for Network plugins ***************************** #

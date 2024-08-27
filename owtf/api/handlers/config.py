@@ -14,7 +14,7 @@ __all__ = ["ConfigurationHandler"]
 class ConfigurationHandler(APIRequestHandler):
     """Update framework settings and tool paths."""
 
-    SUPPORTED_METHODS = ["GET", "PATCH"]
+    SUPPORTED_METHODS = ["GET", "PATCH", "OPTIONS"]
 
     def get(self):
         """Return all configuration items.

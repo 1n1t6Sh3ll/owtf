@@ -44,10 +44,6 @@ class WorkerHandler(APIRequestHandler):
 
     SUPPORTED_METHODS = ["GET", "POST", "DELETE", "OPTIONS"]
 
-    def set_default_headers(self):
-        self.add_header("Access-Control-Allow-Origin", "*")
-        self.add_header("Access-Control-Allow-Methods", "GET, POST, DELETE")
-
     def get(self, worker_id=None, action=None):
         """Get all workers by ID.
 

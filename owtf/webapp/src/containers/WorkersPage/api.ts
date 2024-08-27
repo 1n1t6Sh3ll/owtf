@@ -1,5 +1,5 @@
 import Request from "../../utils/request";
-import { API_BASE_URL } from "../../utils/constants";
+import { API_BASE_URL, API_HOST } from "../../utils/constants";
 
 function getHeaders(): {
   headers: { "Content-Type": string; Authorization: string };
@@ -57,7 +57,7 @@ export function getWorkerProgressAPI() {
 }
 
 export function getWorkerLogsAPI(action) {
-  const requestURL = `/logs/${
+  const requestURL = `${API_HOST}/logs/${
     action.name
   }.log?lines=${action.lines.toString()}/`;
   const options = getHeaders();

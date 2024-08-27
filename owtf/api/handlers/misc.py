@@ -30,10 +30,6 @@ class DashboardPanelHandler(APIRequestHandler):
 class ProgressBarHandler(APIRequestHandler):
     SUPPORTED_METHODS = ["GET", "POST", "PUT", "PATCH", "DELETE"]
 
-    def set_default_headers(self):
-        self.add_header("Access-Control-Allow-Origin", "*")
-        self.add_header("Access-Control-Allow-Methods", "GET, POST, DELETE")
-
     def get(self):
         try:
             self.write(plugin_count_output(self.session))
@@ -95,3 +91,4 @@ class ErrorDataHandler(APIRequestHandler):
             self.finish()
         except exceptions.InvalidErrorReference:
             raise tornado.web.HTTPError(400)
+

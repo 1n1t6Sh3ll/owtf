@@ -18,4 +18,6 @@ def run(PluginInfo):
             ["Misc", get_resources("PassiveAppDiscoveryMisc")],
         ]
     )
+    # Gau passive url discovery
+    Content += plugin_helper.CommandDump("Test Command", "Output", get_resources("PassiveAppDiscoveryURLs"), PluginInfo, [])
     return Content

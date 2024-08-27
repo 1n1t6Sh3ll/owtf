@@ -8,15 +8,13 @@ import gzip
 import io
 import logging
 import zlib
-
 try:
     from http.client import responses as response_messages
 except ImportError:
     from httplib import responses as response_messages
 
-from cookies import Cookie, InvalidCookieError
-
 from owtf.utils.http import derive_http_method
+from tornado.httputil import _unquote_cookie
 
 __all__ = ["HTTPTransaction"]
 
@@ -165,6 +163,31 @@ class HTTPTransaction(object):
         self.response_size = response_size
         self.response_contents = response_body
 
+    def parse_cookie(cookie: str):
+        """Parse a ``Cookie`` HTTP header into a dict of name/value pairs.
+
+        This function attempts to mimic browser cookie parsing behavior;
+        it specifically does not follow any of the cookie-related RFCs
+        (because browsers don't either).
+
+        The algorithm used is identical to that used by Django version 1.9.10.
+
+        .. versionadded:: 4.4.2
+        """
+        cookiedict = {}
+        for chunk in cookie.split(str(";")):
+            if str("=") in chunk:
+                key, val = chunk.split(str("="), 1)
+            else:
+                # Assume an empty name per
+                # https://bugzilla.mozilla.org/show_bug.cgi?id=169091
+                key, val = str(""), chunk
+            key, val = key.strip(), val.strip()
+            if key or val:
+                # unquote using Python's algorithm.
+                cookiedict[key] = _unquote_cookie(val)
+        return cookiedict
+
     def get_session_tokens(self):
         """Get a JSON blob of all captured cookies
 
@@ -174,8 +197,9 @@ class HTTPTransaction(object):
         cookies = []
         try:  # parsing may sometimes fail
             for cookie in self.cookies_list:
-                cookies.append(Cookie.from_string(cookie).to_dict())
-        except InvalidCookieError:
+                parsed_cookie = parse_cookie(cookie)
+                cookies.append(parsed_cookie)
+        except:
             logging.debug("Cannot not parse the cookies")
         return cookies
 

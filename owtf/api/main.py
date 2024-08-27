@@ -22,7 +22,6 @@ __all__ = ["start_server"]
 
 
 class APIServer(OWTFProcess):
-
     def pseudo_run(self):
         api_v1 = Application(handlers=API_v1_HANDLERS, debug=DEBUG, autoreload=False, gzip=True)
 
@@ -49,7 +48,7 @@ class APIServer(OWTFProcess):
             port = int(SERVER_PORT)
             address = SERVER_ADDR
             self.server.bind(port, address=address)
-            logging.warning("Starting API and UI server at http://{}:{}".format(SERVER_ADDR, str(SERVER_PORT)))
+            logging.warning("Starting API server at http://{}:{}".format(SERVER_ADDR, str(SERVER_PORT)))
             self.logger.disable_console_logging()
             tornado.options.parse_command_line(
                 args=["dummy_arg", "--log_file_prefix={}".format(SERVER_LOG), "--logging=info"]

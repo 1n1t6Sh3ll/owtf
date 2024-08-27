@@ -14,12 +14,16 @@ import time
 import tornado
 import tornado.template
 import tornado.web
+from owtf.api.handlers.base import BaseRequestHandler
 
-__all__ = ["StaticFileHandler"]
+__all__ = ["StaticFileHandler", "OutputFileHandler"]
 
 
-class StaticFileHandler(tornado.web.StaticFileHandler):
+class StaticFileHandler(tornado.web.StaticFileHandler, BaseRequestHandler):
+    pass
 
+
+class OutputFileHandler(tornado.web.StaticFileHandler):
     def set_default_headers(self):
         self.add_header("Access-Control-Allow-Origin", "*")
         self.add_header("Access-Control-Allow-Methods", "GET")
